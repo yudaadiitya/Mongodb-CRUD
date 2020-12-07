@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BREAD MongoDB</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<style>
+  table {
+    border-collapse: collapse;
+    border: none;
+    margin-left: 110px;
+    width: 750px
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 10px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+
+  .tabel-label {
+    font-weight: bold;
+  }
+
+  .header {
+    padding-top: 20px;
+    position: relative;
+    left: 120px;
+  }
+
+  .check {
+    position: relative;
+    left: 115px;
+    font-size: large;
+  }
+
+  #id {
+    position: relative;
+    left: 150px;
+    padding: 5px;
+    width: 535px;
+  }
+
+  #string {
+    position: relative;
+    left: 125px;
+    padding: 5px;
+    width: 535px;
+  }
+
+  #integer {
+    position: relative;
+    left: 118px;
+    padding: 5px;
+    width: 535px;
+  }
+
+  #float {
+    position: relative;
+    left: 132px;
+    padding: 5px;
+    width: 535px;
+  }
+
+  #startdate {
+    position: relative;
+    left: 139px;
+    padding: 5px;
+  }
+
+  .enddate {
+    position: relative;
+    left: 196px;
+    padding: 5px;
+  }
+
+  #boolean {
+    position: relative;
+    left: 111px;
+    padding: 5px;
+    width: 545px;
+  }
+
+  .button-search {
+    position: relative;
+    left: 107px;
+    top: 10px;
+    background-color: rgb(54, 169, 235);
+    border: none;
+    color: white;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .button-edit {
+    background-color: #4CAF50;
+    /* Green */
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .button-delete {
+    background-color: rgb(192, 69, 69);
+    border: none;
+    color: white;
+    padding: 1px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 10px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .button-add {
+    position: relative;
+    left: 120px;
+    top: 10px;
+    background-color: rgb(54, 169, 235);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  ul {
+    list-style-type: none;
+    position: relative;
+    left: 109px;
+    padding: 0;
+    overflow: hidden;
+    border-color: none;
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: rgb(54, 169, 235);
+    border-color: blue;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-top-left-radius: 1px solid black;
+  }
+</style>
+
+<body>
+  <div class="header">
+    <h1>BREAD (Browse, Read, Edit, Add, Delete)</h1>
+    <h2>Filters</h2>
+  </div>
+  <form action="/" method="GET">
+    <div class="check">
+      <input type="checkbox" name="check1" <%= query.check1 ? 'checked' : '' %>>
+      <label>ID</label>
+      <input type="integer" name="id" placeholder="ID" id="id" />
+    </div>
+    <br />
+    <div class="check">
+      <input type="checkbox" name="check2" <%= query.check2 ? 'checked' : '' %>>
+      <label>String</label>
+      <input type="text" name="string" placeholder="String" id="string" />
+    </div>
+    <br />
+    <div class="check">
+      <input type="checkbox" name="check3" <%= query.check3 ? 'checked' : '' %>>
+      <label>Integer</label>
+      <input type="integer" name="integer" placeholder="Integer" id="integer" />
+    </div>
+    <br />
+    <div class="check">
+      <input type="checkbox" name="check4" <%= query.check4 ? 'checked' : '' %>>
+      <label>Float</label>
+      <input type="float" name="float" placeholder="Float" id="float" />
+    </div>
+    <br />
+    <div class="check">
+      <input type="checkbox" name="check5" <%= query.check5 ? 'checked' : '' %>>
+      <label>Date</label>
+      <input type="text" name="startdate" placeholder="Start Date" id="startdate" />
+      <div class="enddate">
+        to
+        <br />
+        <input type="text" name="enddate" placeholder="End Date" id="enddate" style="padding: 5px;" />
+      </div>
+    </div>
+    <br />
+    <div class="check">
+      <input type="checkbox" name="check6" <%= query.check6 ? 'checked' : '' %> />
+      <label>Boolean</label>
+      <select name="boolean" id="boolean" />
+      <option dsabled selected>Choose the boolean...</option>
+      <option value="true" <%= query.boolean == "True" ? ' selected' : '';%>>True</option>
+      <option value="false" <%= query.boolean == "False" ? ' selected' : '';%>>False</option>
+      </select>
+      <br />
+    </div>
+    <button class="button-search" type="submit">Search</button>
+    <br />
+  </form>
+  <br />
+  <table border="1">
+    <tr class="tabel-label">
+      <td>ID</td>
+      <td>String</td>
+      <td>Integer</td>
+      <td>Float</td>
+      <td>Date</td>
+      <td>Boolean</td>
+      <td>Actions</td>
+    </tr>
+      <% data.forEach ((item) => {%>
+    <tr>
+      <td><%=item.id %></td>
+      <td><%=item.string %></td>
+      <td><%=item.integer %></td>
+      <td><%=item.float %></td>
+      <td><%=item.date %></td>
+      <td><%=item.boolean %></td>
+      <td>
+        <a href="/edit/:<%= item._id %>">
+          <button class="button-edit">Edit</button></a>
+        <a href="/delete/:<%= item._id %>" class="button-delete">
+          <button class="button-delete">Delete</button></a>
+       <% }) %>
+      </td>
+    </tr>
+  </table>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item <%= page == 1 ? 'disabled': ''; %>"><a class="page-link"
+          href="/?page=<%= parseInt(page) - 1%>">Previous</a></li>
+      <% for (let i = 1; i <= pages; i++) { %>
+      <li class="page-item <%= page == i ? 'active': ''; %>"><a class="page-link" href="/?page=<%= i %>">
+          <%= i %></a></li>
+      <% }; %>
+      <li class="page-item <%= page == pages ? 'disabled': ''; %>"><a class="page-link"
+          href="/?page=<%= parseInt(page) + 1%>">Next</a></li>
+    </ul>
+  </nav>
+  <a href="add"><button class="button-add">Add</button></a>
+
+</body>
+
+</html>
